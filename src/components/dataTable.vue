@@ -60,6 +60,9 @@ onMounted(() => {
     &__table {
         border: 1px solid white;
         border-radius: 15px;
+        -webkit-box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
+        -moz-box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
+        box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
     }
 }
 </style>

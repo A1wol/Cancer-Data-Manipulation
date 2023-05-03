@@ -5,16 +5,19 @@ export default createStore({
     tableItems: []
   },
   getters: {
-    getTableItems() {
+    getTableItems(state) {
       return state.tableItems;
     }
   },
   mutations: {
-    addTableItems(items) {
+    addTableItems(state, items) {
       state.tableItems = items;
     }
   },
   actions: {
+    addTableItems(context, payload) {
+      context.commit('addTableItems', payload);
+    }
   },
   modules: {
   }
