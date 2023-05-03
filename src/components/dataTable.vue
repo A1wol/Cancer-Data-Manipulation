@@ -1,31 +1,39 @@
 <template>
     <div class="data">
+        <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems" item-value="name"
+            class="elevation-1"></v-data-table>
     </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue"
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex"
 import breastCancerData from "@/dist/data/breast-cancer-wisconsin.data"
 
-const tableData = ref([]);
+const store = useStore()
+const tableItems = ref([]);
 const itemsPerPage = ref(5);
 const tableHeaders = ref([
     {
-        title: 'Dessert (100g serving)',
+        title: 'Radius',
         align: 'start',
         sortable: false,
-        key: 'name',
+        key: 'radius',
     },
-    { title: 'Calories', align: 'end', key: 'calories' },
-    { title: 'Fat (g)', align: 'end', key: 'fat' },
-    { title: 'Carbs (g)', align: 'end', key: 'carbs' },
-    { title: 'Protein (g)', align: 'end', key: 'protein' },
-    { title: 'Iron (%)', align: 'end', key: 'iron' },
+    { title: 'Texture', align: 'center', key: 'texture' },
+    { title: 'Perimeter', align: 'center', key: 'perimeter' },
+    { title: 'Area', align: 'center', key: 'area' },
+    { title: 'Smoothness', align: 'center', key: 'smoothness' },
+    { title: 'Compactness', align: 'center', key: 'compactness' },
+    { title: 'Concavity', align: 'center', key: 'concavity' },
+    { title: 'Concave Points', align: 'center', key: 'concavePoints' },
+    { title: 'Symmetry', align: 'center', key: 'symmetry' },
+    { title: 'Fractal Dimension', align: 'center', key: 'fractalDimension' },
 ]);
 
 function getData() {
     breastCancerData.split("\n").forEach(element => {
         const elementValues = element.split(",")
-        tableData.value.push(
+        tableItems.value.push(
             {
                 radius: elementValues[0],
                 texture: elementValues[1],
@@ -40,6 +48,7 @@ function getData() {
             }
         )
     });
+    store.dispatch('addTableItems', tableItems.value)
 }
 onMounted(() => {
     getData();

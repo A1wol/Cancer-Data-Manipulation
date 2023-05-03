@@ -10,6 +10,9 @@ export default createVuetify(
     components: {
       VDataTable,
     },
+    theme: {
+      defaultTheme: 'dark'
+    }
   }
   // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 )

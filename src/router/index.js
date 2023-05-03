@@ -3,9 +3,16 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'data-table',
     component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/dataView.vue')
+      return import('../views/dataTableView.vue')
+    }
+  },
+  {
+    path: '/graph',
+    name: 'graph',
+    component: function () {
+      return import('../views/graphView.vue')
     }
   }
 ]
