@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="card">
     <v-layout>
 
       <v-navigation-drawer expand-on-hover rail>
@@ -26,10 +26,42 @@
 <script setup>
 import logoUR from "@/assets/logo-ur.jpg"
 import router from "./router";
+import { onMounted } from "vue"
+import breastCancerData from "@/dist/data/breast-cancer-wisconsin.data";
+import { ref } from "vue";
+import { useStore } from "vuex"
+
+const store = useStore()
+const tableItems = ref([]);
+
+function getData() {
+  breastCancerData.split("\n").forEach(element => {
+    const elementValues = element.split(",")
+    tableItems.value.push(
+      {
+        radius: elementValues[0],
+        texture: elementValues[1],
+        perimeter: elementValues[2],
+        area: elementValues[3],
+        smoothness: elementValues[4],
+        compactness: elementValues[5],
+        concavity: elementValues[6],
+        concavePoints: elementValues[7],
+        symmetry: elementValues[8],
+        fractalDimension: elementValues[9]
+      }
+    )
+  });
+  store.dispatch('addTableItems', tableItems.value)
+}
+onMounted(() => {
+  getData();
+})
 </script>
 <style scoped lang="scss">
 .main {
   display: flex;
+  align-items: center;
   justify-content: center;
   margin: 40px;
 }
