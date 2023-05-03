@@ -15,10 +15,12 @@ import DataTable from '@/components/dataTable.vue';
 
 <style scoped lang="scss">
 .data {
-    padding: 24px;
+    max-width: 1000px;
 
     &__header {}
 
-    &__table {}
+    &__table {
+        margin-top: 25px;
+    }
 }
 </style>

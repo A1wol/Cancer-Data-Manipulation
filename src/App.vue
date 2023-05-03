@@ -1,6 +1,7 @@
 <template>
   <v-card>
     <v-layout>
+
       <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item>
@@ -16,7 +17,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-main>
+      <v-main class="main">
         <router-view />
       </v-main>
     </v-layout>
@@ -26,3 +27,10 @@
 import logoUR from "@/assets/logo-ur.jpg"
 import router from "./router";
 </script>
+<style scoped lang="scss">
+.main {
+  display: flex;
+  justify-content: center;
+  margin: 40px;
+}
+</style>

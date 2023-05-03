@@ -1,6 +1,5 @@
 <template>
     <div class="graph">
-        graph view - work in progress
         <DataGraph />
     </div>
 </template>
@@ -8,3 +7,4 @@
 import DataGraph from '@/components/dataGraph.vue';
 
 </script>
+<style scoped lang="scss"></style>

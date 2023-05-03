@@ -1,7 +1,7 @@
 <template>
     <div class="data">
         <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems" item-value="name"
-            class="elevation-1"></v-data-table>
+            class="elevation-1 data__table"></v-data-table>
     </div>
 </template>
 <script setup>
@@ -54,4 +54,12 @@ onMounted(() => {
     getData();
 })
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.data {
+
+    &__table {
+        border: 1px solid white;
+        border-radius: 15px;
+    }
+}
+</style>
