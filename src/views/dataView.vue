@@ -1,9 +1,9 @@
 <template>
     <div class="data">
-        <DataImport />
+        <DataTable />
     </div>
 </template>
 <script setup>
-import DataImport from '@/components/dataImport.vue';
+import DataTable from '@/components/dataTable.vue';
 
 </script>
