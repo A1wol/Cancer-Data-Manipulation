@@ -7,7 +7,7 @@
             <apexchart width="1000" type="bar" :options="options" :series="series">
             </apexchart>
         </div>
-        {{ store.state }}
+        <!-- {{ store.state }} -->
     </div>
 </template>
 <script setup>
