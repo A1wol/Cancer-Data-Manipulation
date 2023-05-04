@@ -4,15 +4,18 @@
             <GraphHeader />
         </div>
         <div class="graph__chart">
-            <apexchart ref="realTimeChart" width="700" type="bar" :options="options" :series="series"></apexchart>
+            <div class="text-h4 text-blue justify-center align-center d-flex flex-column">
+                {{ selectedCategory }}
+                <apexchart ref="realTimeChart" width="700" type="bar" :options="options" :series="series"></apexchart>
+            </div>
 
             <div class="graph__category-select">
                 <div class="text-h4">Choose category: </div>
                 <v-item-group class="d-flex flex-column" selected-class="bg-primary">
                     <div v-for="category in graphCategories" :key="category">
-                        <v-item v-slot="{ selectedClass, toggle }">
+                        <v-item v-slot="{ selectedClass }">
                             <v-card :class="['d-flex align-center', selectedClass]" @click="selectedCategory = category">
-                                <div class="text-h5 text-center graph__category" @click="toggle">
+                                <div class="text-h5 text-center graph__category">
                                     {{ category }}
                                 </div>
                             </v-card>
