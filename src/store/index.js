@@ -17,6 +17,9 @@ export default createStore({
     addTableItems(state, items) {
       state.tableItems = items;
     },
+    clearDeletedRows(state) {
+      state.deletedRows = []
+    },
     deleteTableRows(state, deleteData) {
       state.deletedRows = []
       if (deleteData.isRandom) {

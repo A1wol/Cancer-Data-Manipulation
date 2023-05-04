@@ -1,12 +1,16 @@
 <template>
     <div class="restoring">
-        <v-btn color="primary" @click="restoreData">DATA RESTORE</v-btn>
+        <v-btn :disabled="store.getters.getDeletedRows.length === 0" color="primary" variant="outlined"
+            @click="$emit('openModal')">DATA
+            RESTORE</v-btn>
     </div>
 </template>
 <script setup>
-import { ref } from "vue"
+import { ref, defineEmits, defineProps, watch } from "vue"
 import { useStore } from 'vuex';
 const store = useStore();
+defineEmits(['openModal']);
+const props = defineProps(['restoreAccepted'])
 const averageDataRow = ref({
     radius: 0,
     texture: 0,
@@ -51,6 +55,12 @@ function restoreData() {
         element.symmetry = Math.ceil(averageDataRow.value.symmetry / store.getters.getTableItems.length)
         element.fractalDimension = Math.ceil(averageDataRow.value.fractalDimension / store.getters.getTableItems.length)
     }
+    store.commit('clearDeletedRows')
 }
+watch(props, () => {
+    if (props.restoreAccepted) {
+        restoreData()
+    }
+})
 </script>
 <style scoped lang="scss"></style>

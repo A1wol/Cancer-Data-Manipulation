@@ -20,20 +20,25 @@
                 <v-checkbox v-model="isDeletingRandom" label="Random deleting"></v-checkbox>
 
                 <div class="w-50 d-flex flex-column">
-                    <v-btn color="green" class="mt-4" block @click="deleteData">
+                    <v-btn :disabled="store.getters.getDeletedRows.length !== 0" color="green" class="mt-4" block
+                        @click="deleteData">
                         Delete
                     </v-btn>
 
-                    <v-btn v-if="!isDeletingRandom" color="error" class="mt-4" block @click="formReset">
-                        Reset Form
-                    </v-btn>
+                    <Transition>
+                        <v-btn v-if="!isDeletingRandom" color="error" class="mt-4" block @click="formReset">
+                            Reset Form
+                        </v-btn>
+                    </Transition>
                 </div>
             </v-form>
         </v-sheet>
-        <div v-if="isInfoVisible" class="text-h5 mt-5 text-blue">
-            <div>Some of the data has been deleted.</div>
-            <div>Check data table or data graph to see the changes</div>
-        </div>
+        <Transition>
+            <div v-if="isInfoVisible" class="text-h5 mt-5 text-blue">
+                <div>Some of the data has been deleted.</div>
+                <div>Check data table or data graph to see the changes</div>
+            </div>
+        </Transition>
     </div>
 </template>
 <script setup>
@@ -65,4 +70,14 @@ function formReset() {
 }
 
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>
