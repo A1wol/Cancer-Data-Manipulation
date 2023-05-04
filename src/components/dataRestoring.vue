@@ -19,7 +19,11 @@ const averageDataRow = ref({
     symmetry: 0,
     fractalDimension: 0
 })
+function resetAverages() {
+    Object.keys(averageDataRow.value).map(el => averageDataRow.value[el] = 0)
+}
 function restoreData() {
+    resetAverages()
     let deletedRows = store.getters.getDeletedRows;
     store.getters.getTableItems.map(el => {
         averageDataRow.value.radius += parseInt(el.radius)
