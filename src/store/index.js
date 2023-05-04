@@ -19,15 +19,17 @@ export default createStore({
           let randomRows = Array.from({ length: deleteData.rowQuantity }, () => Math.floor(Math.random() * state.tableItems.length));
           if (randomRows.includes(element.id)) {
             for (let i in element) {
-              element[i] = null
+              element[i] = 0
             }
           }
         })
       }
       else {
         state.tableItems.forEach(element => {
-          for (let i in element) {
-            element[i] = null
+          if (deleteData.rows.includes(element.id)) {
+            for (let i in element) {
+              element[i] = 0
+            }
           }
         });
       }

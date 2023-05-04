@@ -1,13 +1,13 @@
 <template>
     <div class="data">
-        <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems"
+        <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems" density="compact"
             class="elevation-1 data__table"></v-data-table>
     </div>
 </template>
 <script setup>
 import { ref, computed } from "vue"
 import { useStore } from "vuex"
-const itemsPerPage = ref(5);
+const itemsPerPage = ref(15);
 const store = useStore()
 const tableItems = computed(() => store.getters.getTableItems);
 const tableHeaders = ref([
