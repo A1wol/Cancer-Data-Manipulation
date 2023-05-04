@@ -53,6 +53,7 @@ function deleteData() {
     if (isFormValid.value) {
         store.commit('deleteTableRows', { "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
         isInfoVisible.value = true;
+        selectedRowsToDelete.value = undefined;
         setTimeout(() => {
             isInfoVisible.value = false
         }, 3000)
