@@ -37,7 +37,7 @@ const store = useStore()
 const tableItems = ref([]);
 
 function getData() {
-  let id = 0;
+  let id = 1;
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(
@@ -57,6 +57,7 @@ function getData() {
     )
     id++;
   });
+  tableItems.value.pop();
   store.commit('addTableItems', tableItems.value)
 }
 onMounted(() => {
