@@ -12,9 +12,13 @@ const store = useStore()
 const tableItems = computed(() => store.getters.getTableItems);
 const tableHeaders = ref([
     {
-        title: 'Radius',
+        title: 'ID',
         align: 'start',
-        sortable: false,
+        key: 'id',
+    },
+    {
+        title: 'Radius',
+        align: 'center',
         key: 'radius',
     },
     { title: 'Texture', align: 'center', key: 'texture' },

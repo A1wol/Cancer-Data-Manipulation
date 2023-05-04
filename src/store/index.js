@@ -12,12 +12,28 @@ export default createStore({
   mutations: {
     addTableItems(state, items) {
       state.tableItems = items;
+    },
+    deleteTableRows(state, deleteData) {
+      if (deleteData.isRandom) {
+        state.tableItems.forEach(element => {
+          let randomRows = Array.from({ length: deleteData.rowQuantity }, () => Math.floor(Math.random() * state.tableItems.length));
+          if (randomRows.includes(element.id)) {
+            for (let i in element) {
+              element[i] = null
+            }
+          }
+        })
+      }
+      else {
+        state.tableItems.forEach(element => {
+          for (let i in element) {
+            element[i] = null
+          }
+        });
+      }
     }
   },
   actions: {
-    addTableItems(context, payload) {
-      context.commit('addTableItems', payload);
-    }
   },
   modules: {
   }

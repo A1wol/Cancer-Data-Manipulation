@@ -56,7 +56,9 @@ function getSeriesData() {
     options.value.xaxis.categories = xAxisCategories;
 }
 function getGraphCategories() {
-    graphCategories.value = Object.keys(tableItems.value[0]);
+    let categoryObject = Object.keys(tableItems.value[0]);
+    categoryObject.shift()
+    graphCategories.value = categoryObject
 }
 const options = ref({
     xaxis: {

@@ -1,55 +1,60 @@
 <template>
     <div class="deleting-panel">
-        <v-sheet width="800" class="mx-auto">
+        <v-sheet width="400" class="mx-auto">
             <div class="deleting-panel__title text-h4 mb-4 d-flex justify-center">
                 Deleting panel
             </div>
             <v-form ref="form" v-model="isFormValid">
                 <div style="min-height: 80px;">
-                    <v-select v-if="!isDeletingRandom" v-model="selectedCategoryToDelete" :items="selectItems"
-                        :rules="[v => !!v || 'Category is required']" label="Category to delete from"></v-select>
-                    <div v-else class="text-h5 text-red">
-                        Random category
+                    <v-select v-if="!isDeletingRandom" v-model="selectedRowsToDelete"
+                        :items="Array.from(Array(store.getters.getTableItems.length).keys())"
+                        :rules="[v => !!v || 'Category is required']" label="Categories to delete from" multiple></v-select>
+                    <div v-else>
+                        <v-slider v-model="randomRowsToDeleteQuantity" :step="1" thumb-label color="orange"
+                            label="Amount of rows to delete">
+                        </v-slider>
+                        <div>Selected amount: {{ randomRowsToDeleteQuantity }}</div>
                     </div>
                 </div>
 
                 <v-checkbox v-model="isDeletingRandom" label="Random deleting"></v-checkbox>
 
-                <div class="d-flex flex-column w-25 ">
+                <div class="w-50 d-flex flex-column">
                     <v-btn color="green" class="mt-4" block @click="deleteData">
                         Delete
                     </v-btn>
 
-                    <v-btn color="error" class="mt-4" @click="formReset">
+                    <v-btn color="error" class="mt-4" block @click="formReset">
                         Reset Form
                     </v-btn>
                 </div>
             </v-form>
-            <div v-if="isDataDeleted" class="text-h5 mt-5 text-blue">
-                <div>Some of the data has been deleted.</div>
-                <div>Check data table or data graph to see the changes</div>
-            </div>
         </v-sheet>
+        <div v-if="isInfoVisible" class="text-h5 mt-5 text-blue">
+            <div>Some of the data has been deleted.</div>
+            <div>Check data table or data graph to see the changes</div>
+        </div>
     </div>
 </template>
 <script setup>
 import { useStore } from 'vuex';
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
 const store = useStore();
 const form = ref();
-const selectItems = computed(() => Object.keys(store.getters.getTableItems[0]))
-const selectedCategoryToDelete = ref();
+const selectedRowsToDelete = ref([2, 4]);
+const randomRowsToDeleteQuantity = ref(50)
 const isDeletingRandom = ref(false);
-const isDataDeleted = ref(false);
+const isInfoVisible = ref(false);
 const isFormValid = ref(false)
 
 function deleteData() {
     form.value.validate();
     if (isFormValid.value) {
-        isDataDeleted.value = true;
+        store.commit('deleteTableRows', { "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
+        isInfoVisible.value = true;
         setTimeout(() => {
-            isDataDeleted.value = false
+            isInfoVisible.value = false
         }, 3000)
     }
 }

@@ -37,10 +37,12 @@ const store = useStore()
 const tableItems = ref([]);
 
 function getData() {
+  let id = 0;
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(
       {
+        id: id,
         radius: elementValues[0],
         texture: elementValues[1],
         perimeter: elementValues[2],
@@ -53,8 +55,9 @@ function getData() {
         fractalDimension: elementValues[9]
       }
     )
+    id++;
   });
-  store.dispatch('addTableItems', tableItems.value)
+  store.commit('addTableItems', tableItems.value)
 }
 onMounted(() => {
   getData();
