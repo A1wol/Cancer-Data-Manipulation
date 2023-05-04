@@ -42,7 +42,7 @@ import { ref } from "vue";
 
 const store = useStore();
 const form = ref();
-const selectedRowsToDelete = ref([2, 4]);
+const selectedRowsToDelete = ref();
 const randomRowsToDeleteQuantity = ref(50)
 const isDeletingRandom = ref(false);
 const isInfoVisible = ref(false);
