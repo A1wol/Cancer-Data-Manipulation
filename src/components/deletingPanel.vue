@@ -8,7 +8,7 @@
                 <div style="min-height: 80px;">
                     <v-select v-if="!isDeletingRandom" v-model="selectedRowsToDelete"
                         :items="Array.from(Array(store.getters.getTableItems.length).keys())"
-                        :rules="[v => !!v || 'Category is required']" label="Categories to delete from" multiple></v-select>
+                        :rules="[v => !!v || 'Category is required']" label="Rows to delete" multiple></v-select>
                     <div v-else>
                         <v-slider v-model="randomRowsToDeleteQuantity" :step="1" thumb-label color="orange"
                             label="Amount of rows to delete">
