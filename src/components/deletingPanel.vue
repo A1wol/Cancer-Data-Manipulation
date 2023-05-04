@@ -24,7 +24,7 @@
                         Delete
                     </v-btn>
 
-                    <v-btn color="error" class="mt-4" block @click="formReset">
+                    <v-btn v-if="!isDeletingRandom" color="error" class="mt-4" block @click="formReset">
                         Reset Form
                     </v-btn>
                 </div>
@@ -44,7 +44,7 @@ const store = useStore();
 const form = ref();
 const selectedRowsToDelete = ref();
 const randomRowsToDeleteQuantity = ref(50)
-const isDeletingRandom = ref(false);
+const isDeletingRandom = ref(true);
 const isInfoVisible = ref(false);
 const isFormValid = ref(false)
 
