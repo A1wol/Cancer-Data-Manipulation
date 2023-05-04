@@ -40,20 +40,20 @@ const categoryValues = computed(() => tableItems.value.map(el => el[selectedCate
 const xAxisDuplicates = computed(() => [...new Set(categoryValues.value)].map(value => new Object({ "value": value, "duplicateCount": categoryValues.value.filter(str => str === value).length })));
 
 function getSeriesData() {
-    let arr1 = [], arr2 = []
+    let xAxisCategories = [], seriesData = []
     xAxisDuplicates.value.forEach(el => {
         if (el.duplicateCount > 1) {
             if (el.value !== undefined) {
-                arr1.push(el.value)
+                xAxisCategories.push(el.value)
             }
             else {
-                arr1.push('undefined')
+                xAxisCategories.push('undefined')
             }
-            arr2.push(el.duplicateCount)
+            seriesData.push(el.duplicateCount)
         }
     })
-    series.value[0].data = arr2;
-    options.value.xaxis.categories = arr1;
+    series.value[0].data = seriesData;
+    options.value.xaxis.categories = xAxisCategories;
 }
 function getGraphCategories() {
     graphCategories.value = Object.keys(tableItems.value[0]);
@@ -85,7 +85,6 @@ watch(selectedCategory, () => {
         }
     })
 })
-
 onMounted(() => {
     getGraphCategories();
 })

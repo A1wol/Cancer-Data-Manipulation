@@ -14,6 +14,8 @@
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-table" title="Data Table" @click="router.push('/')"></v-list-item>
           <v-list-item prepend-icon="mdi-graph-outline" title="Graph" @click="router.push('/graph')"></v-list-item>
+          <v-list-item prepend-icon="mdi-delete" title="Deleting Panel"
+            @click="router.push('/deleting-panel')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 

@@ -14,6 +14,13 @@ const routes = [
     component: function () {
       return import('../views/graphView.vue')
     }
+  },
+  {
+    path: '/deleting-panel',
+    name: 'deleting-panel',
+    component: function () {
+      return import('../views/dataDeletingView.vue')
+    }
   }
 ]
 
