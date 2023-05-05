@@ -10,8 +10,8 @@
                         :items="Array.from(Array(store.getters.getTableItems.length).keys())"
                         :rules="[v => !!v || 'Category is required']" label="Rows to delete" multiple></v-select>
                     <div v-else>
-                        <v-slider v-model="randomRowsToDeleteQuantity" :step="1" thumb-label color="orange"
-                            label="Amount of rows to delete">
+                        <v-slider v-model="randomRowsToDeleteQuantity" :rules="[v => v > 0 || 'Must be greater than 0']"
+                            :step="1" thumb-label color="orange" label="Amount of rows to delete">
                         </v-slider>
                         <div>Selected amount: {{ randomRowsToDeleteQuantity }}</div>
                     </div>
@@ -20,8 +20,8 @@
                 <v-checkbox v-model="isDeletingRandom" label="Random deleting"></v-checkbox>
 
                 <div class="w-50 d-flex flex-column">
-                    <v-btn :disabled="store.getters.getDeletedRows.length !== 0" color="green" class="mt-4" block
-                        @click="$emit('openModal')">
+                    <v-btn :disabled="store.getters.getDeletedRows.length !== 0 || randomRowsToDeleteQuantity < 1"
+                        color="green" class="mt-4" block @click="$emit('openModal')">
                         Delete
                     </v-btn>
 
