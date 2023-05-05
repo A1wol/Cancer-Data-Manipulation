@@ -32,10 +32,11 @@ function restoreData() {
     resetAverages()
     store.getters.getTableItems.map(tableItem => {
         Object.entries(averageDataRow.value).forEach(averageValue => {
-            averageDataRow.value[averageValue[0]] += parseInt(tableItem[averageValue[0]])
+            averageDataRow.value[averageValue[0]] += isNaN(tableItem[averageValue[0]]) ? 1 : parseInt(tableItem[averageValue[0]])
         });
         countedRowLength.value++;
     })
+    console.log(averageDataRow.value)
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id') {
