@@ -8,7 +8,9 @@
             <DataTable />
         </div>
         <Transition>
-            <RestoreModal v-if="isModalVisible" @close="isModalVisible = false" @accept="isRestoringAccepted = true" />
+            <InterfaceModal v-if="isModalVisible" @close="isModalVisible = false" @accept="isRestoringAccepted = true">
+                Are you sure you want to restore data?
+            </InterfaceModal>
         </Transition>
     </div>
 </template>
@@ -16,7 +18,7 @@
 import DataHeader from '@/components/dataHeader.vue';
 import DataRestoring from '@/components/dataRestoring.vue';
 import DataTable from '@/components/dataTable.vue';
-import RestoreModal from '@/components/ui/restoreModal.vue';
+import InterfaceModal from '@/components/ui/interfaceModal.vue';
 import { ref } from "vue"
 
 const isModalVisible = ref(false);

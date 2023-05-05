@@ -23,37 +23,25 @@ const averageDataRow = ref({
     symmetry: 0,
     fractalDimension: 0
 })
+const countedRowLength = ref(0)
 function resetAverages() {
-    Object.keys(averageDataRow.value).map(el => averageDataRow.value[el] = 0)
+    Object.keys(averageDataRow.value).map(el => averageDataRow.value[el] = 0);
+    countedRowLength.value = 0;
 }
 function restoreData() {
     resetAverages()
-    let deletedRows = store.getters.getDeletedRows;
-    store.getters.getTableItems.map(el => {
-        averageDataRow.value.radius += parseInt(el.radius)
-        averageDataRow.value.texture += parseInt(el.texture)
-        averageDataRow.value.perimeter += parseInt(el.perimeter)
-        averageDataRow.value.area += parseInt(el.area)
-        averageDataRow.value.smoothness += parseInt(el.smoothness)
-        averageDataRow.value.compactness += parseInt(el.compactness)
-        if (typeof el.concavity === Number) {
-            averageDataRow.value.concavity += parseInt(el.concavity)
-        }
-        averageDataRow.value.concavePoints += parseInt(el.concavePoints)
-        averageDataRow.value.symmetry += parseInt(el.symmetry)
-        averageDataRow.value.fractalDimension += parseInt(el.fractalDimension)
+    store.getters.getTableItems.map(tableItem => {
+        Object.entries(averageDataRow.value).forEach(averageValue => {
+            averageDataRow.value[averageValue[0]] += parseInt(tableItem[averageValue[0]])
+        });
+        countedRowLength.value++;
     })
-    for (let element of deletedRows) {
-        element.radius = Math.ceil(averageDataRow.value.radius / store.getters.getTableItems.length)
-        element.texture = Math.ceil(averageDataRow.value.texture / store.getters.getTableItems.length)
-        element.perimeter = Math.ceil(averageDataRow.value.perimeter / store.getters.getTableItems.length)
-        element.area = Math.ceil(averageDataRow.value.area / store.getters.getTableItems.length)
-        element.smoothness = Math.ceil(averageDataRow.value.smoothness / store.getters.getTableItems.length)
-        element.compactness = Math.ceil(averageDataRow.value.compactness / store.getters.getTableItems.length)
-        element.concavity = Math.ceil(averageDataRow.value.concavity / store.getters.getTableItems.length)
-        element.concavePoints = Math.ceil(averageDataRow.value.concavePoints / store.getters.getTableItems.length)
-        element.symmetry = Math.ceil(averageDataRow.value.symmetry / store.getters.getTableItems.length)
-        element.fractalDimension = Math.ceil(averageDataRow.value.fractalDimension / store.getters.getTableItems.length)
+    for (let element of store.getters.getDeletedRows) {
+        Object.entries(element).forEach(el => {
+            if (el[0] !== 'id') {
+                element[el[0]] = Math.ceil(averageDataRow.value[el[0]] / countedRowLength.value)
+            }
+        });
     }
     store.commit('clearDeletedRows')
 }

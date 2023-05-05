@@ -6,12 +6,12 @@
             </div>
 
             <div class="modal__body text-h5 mt-5">
-                Are you sure you want to restore data?
+                <slot />
             </div>
 
             <footer class="modal__footer mt-5">
                 <v-btn color="green" class="mr-3" @click="$emit('accept'), $emit('close')">
-                    Restore
+                    Accept
                 </v-btn>
                 <v-btn color="red" @click="$emit('close')">
                     Close Modal

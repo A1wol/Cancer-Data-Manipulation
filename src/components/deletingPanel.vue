@@ -21,7 +21,7 @@
 
                 <div class="w-50 d-flex flex-column">
                     <v-btn :disabled="store.getters.getDeletedRows.length !== 0" color="green" class="mt-4" block
-                        @click="deleteData">
+                        @click="$emit('openModal')">
                         Delete
                     </v-btn>
 
@@ -29,6 +29,7 @@
                         <v-btn v-if="!isDeletingRandom" color="error" class="mt-4" block @click="formReset">
                             Reset Form
                         </v-btn>
+
                     </Transition>
                 </div>
             </v-form>
@@ -43,7 +44,7 @@
 </template>
 <script setup>
 import { useStore } from 'vuex';
-import { ref } from "vue";
+import { ref, defineEmits, defineProps, watch } from "vue";
 
 const store = useStore();
 const form = ref();
@@ -52,6 +53,8 @@ const randomRowsToDeleteQuantity = ref(50)
 const isDeletingRandom = ref(true);
 const isInfoVisible = ref(false);
 const isFormValid = ref(false)
+defineEmits(['openModal']);
+const props = defineProps(['restoreAccepted']);
 
 function deleteData() {
     form.value.validate();
@@ -65,6 +68,11 @@ function deleteData() {
     }
 }
 
+watch(props, () => {
+    if (props.restoreAccepted) {
+        deleteData()
+    }
+})
 function formReset() {
     form.value.reset()
 }
