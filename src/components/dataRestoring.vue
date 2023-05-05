@@ -36,7 +36,6 @@ function restoreData() {
         });
         countedRowLength.value++;
     })
-    console.log(averageDataRow.value)
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id') {
