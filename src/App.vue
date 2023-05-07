@@ -1,7 +1,6 @@
 <template>
-  <v-card class="card">
+  <v-app app>
     <v-layout>
-
       <v-navigation-drawer expand-on-hover rail>
         <v-list>
           <v-list-item>
@@ -16,7 +15,7 @@
           <v-list-item prepend-icon="mdi-graph-outline" title="Graph" @click="router.push('/graph')"></v-list-item>
           <v-list-item prepend-icon="mdi-delete" title="Deleting Panel"
             @click="router.push('/deleting-panel')"></v-list-item>
-          <v-list-item prepend-icon="mdi-restart" title="Reset" @click="getData()"></v-list-item>
+          <v-list-item prepend-icon="mdi-restart" title="Reset" @click="getData()" class="text-red"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -24,7 +23,7 @@
         <router-view />
       </v-main>
     </v-layout>
-  </v-card>
+  </v-app>
 </template>
 <script setup>
 import logoUR from "@/assets/logo-ur.jpg"
@@ -72,6 +71,6 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 40px;
+  background-color: rgb(33, 33, 33);
 }
 </style>
