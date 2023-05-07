@@ -7,7 +7,7 @@
 <script setup>
 import { ref, computed } from "vue"
 import { useStore } from "vuex"
-const itemsPerPage = ref(15);
+const itemsPerPage = ref(10);
 const store = useStore()
 const tableItems = computed(() => store.getters.getTableItems);
 const tableHeaders = ref([

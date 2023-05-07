@@ -16,6 +16,7 @@
           <v-list-item prepend-icon="mdi-graph-outline" title="Graph" @click="router.push('/graph')"></v-list-item>
           <v-list-item prepend-icon="mdi-delete" title="Deleting Panel"
             @click="router.push('/deleting-panel')"></v-list-item>
+          <v-list-item prepend-icon="mdi-restart" title="Reset" @click="getData()"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -38,6 +39,8 @@ const tableItems = ref([]);
 
 function getData() {
   let id = 1;
+  tableItems.value = [];
+  store.commit('clearDeletedRows')
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(

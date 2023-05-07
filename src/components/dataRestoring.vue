@@ -8,6 +8,7 @@
 <script setup>
 import { ref, defineEmits, defineProps, watch } from "vue"
 import { useStore } from 'vuex';
+
 const store = useStore();
 defineEmits(['openModal']);
 const props = defineProps(['restoreAccepted'])

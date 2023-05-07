@@ -4,7 +4,7 @@
             <div class="deleting-panel__title text-h4 mb-4 d-flex justify-center">
                 Deleting panel
             </div>
-            <v-form ref="form" v-model="isFormValid">
+            <v-form ref="form">
                 <div style="min-height: 80px;">
                     <v-select v-if="!isDeletingRandom" v-model="selectedRowsToDelete"
                         :items="Array.from(Array(store.getters.getTableItems.length).keys())"
@@ -20,7 +20,7 @@
                 <v-checkbox v-model="isDeletingRandom" label="Random deleting"></v-checkbox>
 
                 <div class="w-50 d-flex flex-column">
-                    <v-btn :disabled="store.getters.getDeletedRows.length !== 0 || randomRowsToDeleteQuantity < 1"
+                    <v-btn :disabled="store.getters.getDeletedRows.length !== 0 || randomRowsToDeleteQuantity === 0"
                         color="green" class="mt-4" block @click="$emit('openModal')">
                         Delete
                     </v-btn>
@@ -52,13 +52,12 @@ const selectedRowsToDelete = ref();
 const randomRowsToDeleteQuantity = ref(50)
 const isDeletingRandom = ref(true);
 const isInfoVisible = ref(false);
-const isFormValid = ref(false)
 defineEmits(['openModal']);
 const props = defineProps(['restoreAccepted']);
 
 function deleteData() {
     form.value.validate();
-    if (isFormValid.value) {
+    if ((isDeletingRandom.value && randomRowsToDeleteQuantity.value > 0) || (!isDeletingRandom.value && selectedRowsToDelete.value)) {
         store.commit('deleteTableRows', { "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
         isInfoVisible.value = true;
         selectedRowsToDelete.value = undefined;
@@ -70,7 +69,7 @@ function deleteData() {
 
 watch(props, () => {
     if (props.restoreAccepted) {
-        deleteData()
+        deleteData();
     }
 })
 function formReset() {
