@@ -1,6 +1,5 @@
-# pros-project
-
-Data manipulation using Vue 3
+Cancer data analysis using Vue 3 and Apex Charts.
+Filling missing table rows based on rows with the same decision value.
 
 ## Project setup
 ```
