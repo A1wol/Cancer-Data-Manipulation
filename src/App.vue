@@ -74,4 +74,10 @@ onMounted(() => {
   justify-content: center;
   background-color: rgb(33, 33, 33);
 }
+
+@media (max-width: 900px) {
+  .main {
+    padding: 12px;
+  }
+}
 </style>
