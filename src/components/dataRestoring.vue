@@ -8,42 +8,62 @@
 <script setup>
 import { ref, defineEmits, defineProps, watch } from "vue"
 import { useStore } from 'vuex';
+import { AverageRow } from "@/classes/dataRestore.js"
 
 const store = useStore();
 defineEmits(['openModal']);
 const props = defineProps(['restoreAccepted'])
-const averageDataRow = ref({
-    radius: 0,
-    texture: 0,
-    perimeter: 0,
-    area: 0,
-    smoothness: 0,
-    compactness: 0,
-    concavity: 0,
-    concavePoints: 0,
-    symmetry: 0,
-    fractalDimension: 0
-})
-const countedRowLength = ref(0)
+
+const averageDataRow2Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 2)
+const averageDataRow4Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 4)
+
+const countedRowLength2Decision = ref(0)
+const countedRowLength4Decision = ref(0)
+
 function resetAverages() {
-    Object.keys(averageDataRow.value).map(el => averageDataRow.value[el] = 0);
-    countedRowLength.value = 0;
+    Object.keys(averageDataRow2Decision).map(el => { if (el !== 'decision') { averageDataRow2Decision[el] = 0 } });
+    Object.keys(averageDataRow4Decision).map(el => { if (el !== 'decision') { averageDataRow4Decision[el] = 0 } });
+    countedRowLength2Decision.value = 0;
+    countedRowLength4Decision.value = 0;
 }
-function restoreData() {
-    resetAverages()
+
+function sumRowAttributeValues() {
     store.getters.getTableItems.map(tableItem => {
-        Object.entries(averageDataRow.value).forEach(averageValue => {
-            averageDataRow.value[averageValue[0]] += isNaN(tableItem[averageValue[0]]) ? 1 : parseInt(tableItem[averageValue[0]])
-        });
-        countedRowLength.value++;
+        if (tableItem.decision !== 0) {
+            if (tableItem.decision == 2) {
+                Object.entries(averageDataRow2Decision).forEach(averageValue => {
+                    averageDataRow2Decision[averageValue[0]] += isNaN(tableItem[averageValue[0]]) ? 1 : parseInt(tableItem[averageValue[0]])
+                });
+                countedRowLength2Decision.value++;
+            }
+            else if (tableItem.decision == 4) {
+                Object.entries(averageDataRow4Decision).forEach(averageValue => {
+                    averageDataRow4Decision[averageValue[0]] += isNaN(tableItem[averageValue[0]]) ? 1 : parseInt(tableItem[averageValue[0]])
+                });
+                countedRowLength4Decision.value++;
+            }
+        }
     })
+}
+function getAverageRowValues() {
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
-            if (el[0] !== 'id') {
-                element[el[0]] = Math.ceil(averageDataRow.value[el[0]] / countedRowLength.value)
+            if (el[0] !== 'id' && el[0] !== 'decision') {
+                if (element.decision == 2) {
+                    element[el[0]] = Math.ceil(averageDataRow2Decision[el[0]] / countedRowLength2Decision.value)
+                }
+                else if (element.decision == 4) {
+                    element[el[0]] = Math.ceil(averageDataRow4Decision[el[0]] / countedRowLength4Decision.value)
+                }
             }
         });
     }
+}
+
+function restoreData() {
+    resetAverages()
+    sumRowAttributeValues()
+    getAverageRowValues()
     store.commit('clearDeletedRows')
 }
 watch(props, () => {

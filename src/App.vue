@@ -45,6 +45,7 @@ function getData() {
     tableItems.value.push(
       {
         id: id,
+        decision: elementValues[10],
         radius: elementValues[0],
         texture: elementValues[1],
         perimeter: elementValues[2],

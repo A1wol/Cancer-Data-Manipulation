@@ -28,7 +28,7 @@ export default createStore({
           if (randomRows.includes(element.id)) {
             state.deletedRows.push(element)
             for (let i in element) {
-              if (i !== 'id') {
+              if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
               }
             }
@@ -40,7 +40,7 @@ export default createStore({
           if (deleteData.rows.includes(element.id)) {
             state.deletedRows.push(element)
             for (let i in element) {
-              if (i !== 'id') {
+              if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
               }
             }

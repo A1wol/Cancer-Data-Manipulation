@@ -17,6 +17,11 @@ const tableHeaders = ref([
         key: 'id',
     },
     {
+        title: 'Decision',
+        align: 'center',
+        key: 'decision',
+    },
+    {
         title: 'Radius',
         align: 'center',
         key: 'radius',
