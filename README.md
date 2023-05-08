@@ -1,7 +1,3 @@
-# pros-project
-
-Data manipulation using Vue 3
-
 ## Project setup
 ```
 npm install
