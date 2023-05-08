@@ -1,17 +1,18 @@
 <template>
     <div class="graph">
-        <div class="graph__header">
+        <div class="graph__header d-none d-md-flex d-lg-flex">
             <GraphHeader />
         </div>
-        <div class="graph__chart">
-            <div class="text-h4 text-blue justify-center align-center d-flex flex-column">
+        <div class="graph__content">
+            <div style="width:100%" class="text-h4 text-blue justify-center align-center">
                 {{ selectedCategory }}
-                <apexchart ref="realTimeChart" width="700" type="bar" :options="options" :series="series"></apexchart>
+                <apexchart class="graph__chart" ref="realTimeChart" :options="options" :series="series">
+                </apexchart>
             </div>
 
             <div class="graph__category-select">
-                <div class="text-h4">Choose category: </div>
-                <v-item-group class="d-flex flex-column" selected-class="bg-primary">
+                <div class="text-h5">Choose category: </div>
+                <v-item-group class="d-flex flex-column ma-5" selected-class="bg-primary">
                     <div v-for="category in graphCategories" :key="category">
                         <v-item v-slot="{ selectedClass }">
                             <v-card :class="['d-flex align-center', selectedClass]" @click="selectedCategory = category">
@@ -61,6 +62,9 @@ function getGraphCategories() {
     graphCategories.value = categoryObject
 }
 const options = ref({
+    chart: {
+        type: "bar",
+    },
     xaxis: {
         categories: [],
         title: {
@@ -71,7 +75,19 @@ const options = ref({
         title: {
             text: 'Amount of duplicates'
         }
-    }
+    },
+    responsive: [
+        {
+            breakpoint: 900,
+            options: {
+                plotOptions: {
+                    bar: {
+                        horizontal: true
+                    }
+                },
+            }
+        }
+    ]
 })
 const series = ref([{
     data: []
@@ -93,16 +109,37 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 .graph {
-    &__chart {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
         display: flex;
+        justify-content: center;
+        width: 100%;
     }
 
-    &__category {
-        margin-left: 12px;
+    &__chart {
+        width: 100%;
+        max-width: 700px;
     }
 
     &__category-select {
-        margin-left: 20px;
+        width: 35%;
+    }
+}
+
+@media (max-width: 900px) {
+    .graph {
+        &__content {
+            text-align: center;
+            flex-direction: column-reverse;
+        }
+
+        &__category-select {
+            width: 100%;
+        }
     }
 }
 </style>

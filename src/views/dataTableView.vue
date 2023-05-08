@@ -27,6 +27,7 @@ const isRestoringAccepted = ref(false);
 
 <style scoped lang="scss">
 .data {
+    width: 100%;
     max-width: 1000px;
 
     &__table {

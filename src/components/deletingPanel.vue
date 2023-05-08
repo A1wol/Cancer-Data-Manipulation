@@ -1,6 +1,6 @@
 <template>
     <div class="deleting-panel">
-        <v-sheet width="400" class="mx-auto">
+        <v-sheet class="mx-auto">
             <div class="deleting-panel__title text-h4 mb-4 d-flex justify-center">
                 Deleting panel
             </div>

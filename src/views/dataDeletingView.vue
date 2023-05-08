@@ -17,6 +17,11 @@ const isRestoringAccepted = ref(false);
 </script>
 
 <style scoped lang="scss">
+.deleting {
+    width: 100%;
+    max-width: 500px;
+}
+
 .v-enter-active,
 .v-leave-active {
     transition: opacity 0.5s ease;
