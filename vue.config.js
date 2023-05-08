@@ -1,4 +1,5 @@
 module.exports = {
+    publicPath: process.env.NODE_ENV === "production" ? "/Cancer-Data-Manipulation/" : "/",
     chainWebpack: config => {
         // GraphQL Loader
         config.module

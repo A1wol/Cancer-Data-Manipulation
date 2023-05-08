@@ -4,8 +4,8 @@
             <GraphHeader />
         </div>
         <div class="graph__content">
-            <div style="width:100%" class="text-h4 text-blue justify-center align-center">
-                {{ selectedCategory }}
+            <div style="width:100%;" class="text-h4 text-blue justify-center align-center">
+                <div style="min-height: 50px;">{{ selectedCategory }}</div>
                 <apexchart class="graph__chart" ref="realTimeChart" :options="options" :series="series">
                 </apexchart>
             </div>
