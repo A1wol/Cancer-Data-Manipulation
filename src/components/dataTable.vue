@@ -1,7 +1,13 @@
 <template>
     <div class="data">
         <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems" density="compact"
-            class="elevation-1 data__table"></v-data-table>
+            class="elevation-1 data__table">
+            <template v-slot:item.status="{ item }">
+                <v-chip :color="getRowChipColor(item)">
+                    {{ getDataRowStatus(item) }}
+                </v-chip>
+            </template>
+        </v-data-table>
     </div>
 </template>
 <script setup>
@@ -15,6 +21,11 @@ const tableHeaders = ref([
         title: 'ID',
         align: 'start',
         key: 'id',
+    },
+    {
+        title: 'Status',
+        align: 'center',
+        key: 'status',
     },
     {
         title: 'Decision',
@@ -36,11 +47,20 @@ const tableHeaders = ref([
     { title: 'Symmetry', align: 'center', key: 'symmetry' },
     { title: 'Fractal Dimension', align: 'center', key: 'fractalDimension' },
 ]);
-
+function getRowChipColor(row) {
+    if (store.)
+}
+function getDataRowStatus(row) {
+    if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {
+        return 'deleted'
+    }
+    else {
+        return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'restored' : 'default'
+    }
+}
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .data {
-
     &__table {
         border: 1px solid white;
         border-radius: 15px;
