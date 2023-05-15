@@ -48,7 +48,12 @@ const tableHeaders = ref([
     { title: 'Fractal Dimension', align: 'center', key: 'fractalDimension' },
 ]);
 function getRowChipColor(row) {
-    if (store.)
+    if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {
+        return 'error'
+    }
+    else {
+        return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
+    }
 }
 function getDataRowStatus(row) {
     if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {

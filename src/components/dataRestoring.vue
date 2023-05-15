@@ -12,7 +12,8 @@ import { AverageRow } from "@/classes/dataRestore.js"
 
 const store = useStore();
 defineEmits(['openModal']);
-const props = defineProps(['restoreAccepted'])
+const props = defineProps(['restoreAccepted']);
+const restoredRows = ref([])
 
 const averageDataRow2Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 2)
 const averageDataRow4Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 4)
@@ -46,6 +47,7 @@ function sumRowAttributeValues() {
     })
 }
 function getAverageRowValues() {
+    restoredRows.value = []
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id' && el[0] !== 'decision') {
@@ -55,6 +57,7 @@ function getAverageRowValues() {
                 else if (element.decision == 4) {
                     element[el[0]] = Math.ceil(averageDataRow4Decision[el[0]] / countedRowLength4Decision.value)
                 }
+                restoredRows.value.push(element)
             }
         });
     }
@@ -65,6 +68,7 @@ function restoreData() {
     sumRowAttributeValues()
     getAverageRowValues()
     store.commit('clearDeletedRows')
+    store.commit('setRestoredRows', restoredRows.value)
 }
 watch(props, () => {
     if (props.restoreAccepted) {

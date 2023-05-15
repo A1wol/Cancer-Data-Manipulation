@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     tableItems: [],
-    deletedRows: []
+    deletedRows: [],
+    restoredRows: []
   },
   getters: {
     getTableItems(state) {
@@ -11,6 +12,9 @@ export default createStore({
     },
     getDeletedRows(state) {
       return state.deletedRows;
+    },
+    getRestoredRows(state) {
+      return state.restoredRows;
     }
   },
   mutations: {
@@ -19,6 +23,9 @@ export default createStore({
     },
     clearDeletedRows(state) {
       state.deletedRows = []
+    },
+    setRestoredRows(state, rows) {
+      state.restoredRows = rows
     },
     deleteTableRows(state, deleteData) {
       state.deletedRows = []
