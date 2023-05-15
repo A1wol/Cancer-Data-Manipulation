@@ -35,9 +35,9 @@
             </v-form>
         </v-sheet>
         <Transition>
-            <div v-if="isInfoVisible" class="text-h5 mt-5 text-blue">
-                <div>Some of the data has been deleted.</div>
-                <div>Check data table or data graph to see the changes</div>
+            <div v-if="isInfoVisible">
+                <v-alert type="success" title="Success!" position="absolute" class="mt-4"
+                    text="Some of the data has been deleted. Check data table or data graph to see the changes."></v-alert>
             </div>
         </Transition>
     </div>
@@ -86,5 +86,9 @@ function formReset() {
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
+}
+
+.deleting-panel {
+    position: relative;
 }
 </style>
