@@ -8,15 +8,15 @@
 <script setup>
 import { ref, defineEmits, defineProps, watch } from "vue"
 import { useStore } from 'vuex';
-import { AverageRow } from "@/classes/dataRestore.js"
+import { DataRow } from "@/classes/dataRestore.js"
 
 const store = useStore();
 defineEmits(['openModal']);
 const props = defineProps(['restoreAccepted']);
 const restoredRows = ref([])
 
-const averageDataRow2Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 2)
-const averageDataRow4Decision = new AverageRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 4)
+const averageDataRow2Decision = new DataRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 2)
+const averageDataRow4Decision = new DataRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 4)
 
 const countedRowLength2Decision = ref(0)
 const countedRowLength4Decision = ref(0)
@@ -46,7 +46,7 @@ function sumRowAttributeValues() {
         }
     })
 }
-function getAverageRowValues() {
+function getDataRowValues() {
     restoredRows.value = store.getters.getRestoredRows
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
@@ -66,7 +66,7 @@ function getAverageRowValues() {
 function restoreData() {
     resetAverages()
     sumRowAttributeValues()
-    getAverageRowValues()
+    getDataRowValues()
     store.commit('clearDeletedRows')
     store.commit('setRestoredRows', restoredRows.value)
 }

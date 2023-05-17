@@ -1,11 +1,21 @@
 <template>
     <div class="data">
         <v-data-table v-model:items-per-page="itemsPerPage" :headers="tableHeaders" :items="tableItems" density="compact"
-            class="elevation-1 data__table">
+            class="elevation-1 data__table" expand-on-click>
             <template v-slot:item.status="{ item }">
-                <v-chip :color="getRowChipColor(item)">
-                    {{ getDataRowStatus(item) }}
+                <v-chip :color="item.props.title.status !== 'updated' ? getRowChipColor(item) : 'blue'">
+                    {{ item.props.title.status !== 'updated' ? getDataRowStatus(item) : 'updated' }}
                 </v-chip>
+            </template>
+            <template v-slot:expanded-row="{ item, columns }">
+                <tr>
+                    <td :colspan="columns.length">
+                        <div class="text-h5 ml-5 mt-3">
+                            Data Update
+                        </div>
+                        <table-row-update :rowData="item" @update-row="updateRow($event, item.columns.id)" />
+                    </td>
+                </tr>
             </template>
         </v-data-table>
     </div>
@@ -13,6 +23,7 @@
 <script setup>
 import { ref, computed } from "vue"
 import { useStore } from "vuex"
+import TableRowUpdate from "./tableRowUpdate.vue";
 const itemsPerPage = ref(10);
 const store = useStore()
 const tableItems = computed(() => store.getters.getTableItems);
@@ -62,6 +73,13 @@ function getDataRowStatus(row) {
     else {
         return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'restored' : 'default'
     }
+}
+function updateRow(row, itemID) {
+    let updateData = {
+        id: itemID,
+        row: { status: "updated", ...row }
+    }
+    store.commit('updateRow', updateData)
 }
 </script>
 <style scoped lang="scss">

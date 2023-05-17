@@ -27,6 +27,11 @@ export default createStore({
     setRestoredRows(state, rows) {
       state.restoredRows = rows
     },
+    updateRow(state, updateData) {
+      let rowToMutate = state.tableItems.find(el => el.id == updateData.id);
+      let updatedRow = { id: rowToMutate.id, decision: rowToMutate.decision, ...updateData.row }
+      Object.assign(rowToMutate, updatedRow)
+    },
     deleteTableRows(state, deleteData) {
       state.deletedRows = []
       if (deleteData.isRandom) {
