@@ -47,7 +47,7 @@ function sumRowAttributeValues() {
     })
 }
 function getAverageRowValues() {
-    restoredRows.value = []
+    restoredRows.value = store.getters.getRestoredRows
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id' && el[0] !== 'decision') {
