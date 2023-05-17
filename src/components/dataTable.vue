@@ -4,7 +4,7 @@
             class="elevation-1 data__table" expand-on-click>
             <template v-slot:item.status="{ item }">
                 <v-chip :color="item.props.title.status !== 'updated' ? getRowChipColor(item) : 'blue'">
-                    {{ item.props.title.status !== 'updated' ? getDataRowStatus(item) : 'updated' }}
+                    {{ item.props.title.status }}
                 </v-chip>
             </template>
             <template v-slot:expanded-row="{ item, columns }">
@@ -67,14 +67,6 @@ function getRowChipColor(row) {
     }
     else {
         return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
-    }
-}
-function getDataRowStatus(row) {
-    if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {
-        return 'deleted'
-    }
-    else {
-        return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'restored' : 'default'
     }
 }
 function updateRow(row, itemID) {

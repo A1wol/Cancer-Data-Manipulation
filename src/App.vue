@@ -40,12 +40,14 @@ const tableItems = ref([]);
 function getData() {
   let id = 1;
   tableItems.value = [];
-  store.commit('clearDeletedRows')
+  store.commit('clearDeletedRows');
+  store.commit('clearRestoredRows');
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(
       {
         id: id,
+        status: 'default',
         decision: elementValues[10],
         radius: elementValues[0],
         texture: elementValues[1],

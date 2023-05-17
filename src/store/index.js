@@ -24,6 +24,9 @@ export default createStore({
     clearDeletedRows(state) {
       state.deletedRows = []
     },
+    clearRestoredRows(state) {
+      state.restoredRows = []
+    },
     setRestoredRows(state, rows) {
       state.restoredRows = rows
     },
@@ -42,6 +45,7 @@ export default createStore({
             for (let i in element) {
               if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
+                element['status'] = 'deleted'
               }
             }
           }
@@ -54,6 +58,7 @@ export default createStore({
             for (let i in element) {
               if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
+                element['status'] = 'deleted'
               }
             }
           }

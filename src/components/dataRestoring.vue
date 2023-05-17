@@ -51,6 +51,7 @@ function getDataRowValues() {
     for (let element of store.getters.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id' && el[0] !== 'decision') {
+                element['status'] = 'restored'
                 if (element.decision == 2) {
                     element[el[0]] = Math.ceil(averageDataRow2Decision[el[0]] / countedRowLength2Decision.value)
                 }
