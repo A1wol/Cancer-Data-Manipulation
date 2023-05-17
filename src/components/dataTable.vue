@@ -18,6 +18,9 @@
                 </tr>
             </template>
         </v-data-table>
+        <div class="table-info d-flex justify-end">
+            Click a row to update the data
+        </div>
     </div>
 </template>
 <script setup>
