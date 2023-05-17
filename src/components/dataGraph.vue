@@ -36,7 +36,7 @@ const realTimeChart = ref()
 const store = useStore()
 const graphCategories = ref([])
 const selectedCategory = ref()
-const tableItems = computed(() => store.getters.getTableItems);
+const tableItems = ref(store.getters.getTableItems)
 const categoryValues = computed(() => tableItems.value.map(el => el[selectedCategory.value]));
 const xAxisDuplicates = computed(() => [...new Set(categoryValues.value)].map(value => new Object({ "value": value, "duplicateCount": categoryValues.value.filter(str => str === value).length })));
 

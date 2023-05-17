@@ -1,4 +1,4 @@
-export class AverageRow {
+export class DataRow {
     radius = 0
     texture = 0
     perimeter = 0
