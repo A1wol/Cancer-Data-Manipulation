@@ -63,4 +63,10 @@ const updatedRow = ref({
         margin-right: 15px;
     }
 }
+
+@media (max-width: 650px) {
+    .row-update {
+        flex-direction: column;
+    }
+}
 </style>
