@@ -9,7 +9,7 @@
             </template>
             <template v-slot:expanded-row="{ item, columns }">
                 <tr>
-                    <td :colspan="columns.length">
+                    <td :colspan="columns.length" style="background-color: rgb(27, 27, 27);">
                         <div class="text-h5 ml-5 mt-3">
                             Data Update
                         </div>
@@ -85,6 +85,13 @@ function updateRow(row, itemID) {
         -webkit-box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
         -moz-box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
         box-shadow: 1px 3px 24px 3px rgba(66, 68, 90, 1);
+    }
+}
+
+::v-deep .v-data-table {
+    &__tr:hover {
+        color: white;
+        font-weight: bold;
     }
 }
 </style>
