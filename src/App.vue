@@ -15,8 +15,8 @@
           <v-list-item prepend-icon="mdi-graph-outline" title="Graph" @click="router.push('/graph')"></v-list-item>
           <v-list-item prepend-icon="mdi-delete" title="Deleting Panel"
             @click="router.push('/deleting-panel')"></v-list-item>
-          <!-- <v-list-item :disabled="store.getters.getDeletedRows.length === 0" prepend-icon="mdi-restart" title="Reset"
-            @click="getData()" class="text-red"></v-list-item> -->
+          <v-list-item :disabled="store.getDeletedRows.length === 0" prepend-icon="mdi-restart" title="Reset"
+            @click="getData()" class="text-red"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -32,16 +32,16 @@ import router from "./router";
 import { onMounted } from "vue"
 import breastCancerData from "@/dist/data/breast-cancer-wisconsin.data";
 import { ref } from "vue";
-// import { useDataStore } from "@/store/index"
+import { useDataStore } from "@/store/index"
 
-// const store = useDataStore()
+const store = useDataStore()
 const tableItems = ref([]);
 
 function getData() {
   let id = 1;
   tableItems.value = [];
-  // store.commit('clearDeletedRows');
-  // store.commit('clearRestoredRows');
+  store.clearDeletedRows();
+  store.clearRestoredRows();
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(
@@ -64,7 +64,7 @@ function getData() {
     id++;
   });
   tableItems.value.pop();
-  // store.commit('addTableItems', tableItems.value)
+  store.addTableItems(tableItems.value)
 }
 onMounted(() => {
   getData();

@@ -30,7 +30,7 @@ import { useDataStore } from "@/store/index"
 
 const store = useDataStore()
 const itemsPerPage = ref(10);
-const tableItems = computed(() => store.getters.getTableItems);
+const tableItems = computed(() => store.getTableItems);
 const tableHeaders = ref([
     {
         title: 'ID',
@@ -63,19 +63,22 @@ const tableHeaders = ref([
     { title: 'Fractal Dimension', align: 'center', key: 'fractalDimension' },
 ]);
 function getRowChipColor(row) {
-    if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {
+    if (store.getDeletedRows.find(el => el.id == row.columns.id)) {
         return 'error'
     }
     else {
-        return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
+        console.log(store.getRestoredRows)
+        return store.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
     }
 }
 function updateRow(row, itemID) {
     let updateData = {
         id: itemID,
-        row: { status: "updated", ...row }
+        row: row,
+        // row: { status: "updated", ...row }
     }
-    // store.commit('updateRow', updateData)
+    updateData.row.status = "updated"
+    store.updateRow(updateData)
 }
 </script>
 <style scoped lang="scss">

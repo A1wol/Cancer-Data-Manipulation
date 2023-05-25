@@ -1,6 +1,6 @@
 <template>
     <div class="restoring">
-        <v-btn :disabled="store.getters.getDeletedRows.length === 0" color="primary" variant="outlined"
+        <v-btn :disabled="store.getDeletedRows.length === 0" color="primary" variant="outlined"
             @click="$emit('openModal')">DATA
             RESTORE</v-btn>
     </div>
@@ -29,7 +29,7 @@ function resetAverages() {
 }
 
 function sumRowAttributeValues() {
-    store.getters.getTableItems.map(tableItem => {
+    store.getTableItems.map(tableItem => {
         if (tableItem.decision !== 0) {
             if (tableItem.decision == 2) {
                 Object.entries(averageDataRow2Decision).forEach(averageValue => {
@@ -47,8 +47,8 @@ function sumRowAttributeValues() {
     })
 }
 function getDataRowValues() {
-    restoredRows.value = store.getters.getRestoredRows
-    for (let element of store.getters.getDeletedRows) {
+    restoredRows.value = store.getRestoredRows
+    for (let element of store.getDeletedRows) {
         Object.entries(element).forEach(el => {
             if (el[0] !== 'id' && el[0] !== 'decision') {
                 element['status'] = 'restored'
@@ -68,8 +68,8 @@ function restoreData() {
     resetAverages()
     sumRowAttributeValues()
     getDataRowValues()
-    // store.commit('clearDeletedRows')
-    // store.commit('setRestoredRows', restoredRows.value)
+    store.clearDeletedRows();
+    store.setRestoredRows(restoredRows.value)
 }
 watch(props, () => {
     if (props.restoreAccepted) {
