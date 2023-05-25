@@ -51,7 +51,6 @@ function getRowChipColor(row) {
         return 'error'
     }
     else {
-        console.log(store.getRestoredRows)
         return store.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
     }
 }
