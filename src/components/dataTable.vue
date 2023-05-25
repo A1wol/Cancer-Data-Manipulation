@@ -25,32 +25,17 @@
 </template>
 <script setup>
 import { ref, computed } from "vue"
-import { useStore } from "vuex"
 import TableRowUpdate from "./tableRowUpdate.vue";
+import { useDataStore } from "@/store/index"
+
+const store = useDataStore()
 const itemsPerPage = ref(10);
-const store = useStore()
-const tableItems = computed(() => store.getters.getTableItems);
+const tableItems = computed(() => store.getTableItems);
 const tableHeaders = ref([
-    {
-        title: 'ID',
-        align: 'start',
-        key: 'id',
-    },
-    {
-        title: 'Status',
-        align: 'center',
-        key: 'status',
-    },
-    {
-        title: 'Decision',
-        align: 'center',
-        key: 'decision',
-    },
-    {
-        title: 'Radius',
-        align: 'center',
-        key: 'radius',
-    },
+    { title: 'ID', align: 'start', key: 'id', },
+    { title: 'Status', align: 'center', key: 'status', },
+    { title: 'Decision', align: 'center', key: 'decision', },
+    { title: 'Radius', align: 'center', key: 'radius', },
     { title: 'Texture', align: 'center', key: 'texture' },
     { title: 'Perimeter', align: 'center', key: 'perimeter' },
     { title: 'Area', align: 'center', key: 'area' },
@@ -62,11 +47,11 @@ const tableHeaders = ref([
     { title: 'Fractal Dimension', align: 'center', key: 'fractalDimension' },
 ]);
 function getRowChipColor(row) {
-    if (store.getters.getDeletedRows.find(el => el.id == row.columns.id)) {
+    if (store.getDeletedRows.find(el => el.id == row.columns.id)) {
         return 'error'
     }
     else {
-        return store.getters.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
+        return store.getRestoredRows.find(el => el.id == row.columns.id) ? 'primary' : 'green'
     }
 }
 function updateRow(row, itemID) {
@@ -74,7 +59,7 @@ function updateRow(row, itemID) {
         id: itemID,
         row: { status: "updated", ...row }
     }
-    store.commit('updateRow', updateData)
+    store.updateRow(updateData)
 }
 </script>
 <style scoped lang="scss">

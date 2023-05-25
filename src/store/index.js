@@ -1,10 +1,12 @@
-import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 
-export default createStore({
-  state: {
-    tableItems: [],
-    deletedRows: [],
-    restoredRows: []
+export const useDataStore = defineStore('dataStore', {
+  state: () => {
+    return {
+      tableItems: [],
+      deletedRows: [],
+      restoredRows: []
+    }
   },
   getters: {
     getTableItems(state) {
@@ -17,31 +19,31 @@ export default createStore({
       return state.restoredRows;
     }
   },
-  mutations: {
-    addTableItems(state, items) {
-      state.tableItems = items;
+  actions: {
+    addTableItems(items) {
+      this.tableItems = items;
     },
-    clearDeletedRows(state) {
-      state.deletedRows = []
+    clearDeletedRows() {
+      this.deletedRows = []
     },
-    clearRestoredRows(state) {
-      state.restoredRows = []
+    clearRestoredRows() {
+      this.restoredRows = []
     },
-    setRestoredRows(state, rows) {
-      state.restoredRows = rows
+    setRestoredRows(rows) {
+      this.restoredRows = rows
     },
-    updateRow(state, updateData) {
-      let rowToMutate = state.tableItems.find(el => el.id == updateData.id);
+    updateRow(updateData) {
+      let rowToMutate = this.tableItems.find(el => el.id == updateData.id);
       let updatedRow = { id: rowToMutate.id, decision: rowToMutate.decision, ...updateData.row }
       Object.assign(rowToMutate, updatedRow)
     },
-    deleteTableRows(state, deleteData) {
-      state.deletedRows = []
+    deleteTableRows(deleteData) {
+      this.deletedRows = []
       if (deleteData.isRandom) {
-        state.tableItems.forEach(element => {
-          let randomRows = Array.from({ length: deleteData.rowQuantity }, () => Math.floor(Math.random() * state.tableItems.length));
+        this.tableItems.forEach(element => {
+          let randomRows = Array.from({ length: deleteData.rowQuantity }, () => Math.floor(Math.random() * this.tableItems.length));
           if (randomRows.includes(element.id)) {
-            state.deletedRows.push(element)
+            this.deletedRows.push(element)
             for (let i in element) {
               if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
@@ -52,9 +54,9 @@ export default createStore({
         })
       }
       else {
-        state.tableItems.forEach(element => {
+        this.tableItems.forEach(element => {
           if (deleteData.rows.includes(element.id)) {
-            state.deletedRows.push(element)
+            this.deletedRows.push(element)
             for (let i in element) {
               if (i !== 'id' && i !== 'decision') {
                 element[i] = 0
@@ -66,8 +68,4 @@ export default createStore({
       }
     }
   },
-  actions: {
-  },
-  modules: {
-  }
 })

@@ -29,16 +29,16 @@
 </template>
 <script setup>
 import { ref, onMounted, computed, watch } from "vue"
-import { useStore } from "vuex"
 import GraphHeader from "./graphHeader.vue";
+import { useDataStore } from "@/store/index"
 
+const store = useDataStore()
 const realTimeChart = ref()
-const store = useStore()
 const graphCategories = ref([])
 const selectedCategory = ref()
-const tableItems = ref(store.getters.getTableItems)
-const categoryValues = computed(() => tableItems.value.map(el => el[selectedCategory.value]));
-const xAxisDuplicates = computed(() => [...new Set(categoryValues.value)].map(value => new Object({ "value": value, "duplicateCount": categoryValues.value.filter(str => str === value).length })));
+const tableItems = ref(store.getTableItems)
+const categoryValues = computed(() => Array.isArray(tableItems.value) ? tableItems.value.map(el => el[selectedCategory.value]) : []);
+const xAxisDuplicates = computed(() => Array.isArray(categoryValues.value) ? [...new Set(categoryValues.value)].map(value => new Object({ "value": value, "duplicateCount": categoryValues.value.filter(str => str === value).length })) : []);
 
 function getSeriesData() {
     let xAxisCategories = [], seriesData = []
@@ -93,7 +93,6 @@ const series = ref([{
     data: []
 }])
 watch(selectedCategory, () => {
-    getSeriesData();
     realTimeChart.value.updateSeries(([{
         data: series.value[0].data
     }], false, true))
@@ -102,6 +101,7 @@ watch(selectedCategory, () => {
             categories: options.value.xaxis.categories
         }
     })
+    getSeriesData();
 })
 onMounted(() => {
     getGraphCategories();
