@@ -32,26 +32,10 @@ const store = useDataStore()
 const itemsPerPage = ref(10);
 const tableItems = computed(() => store.getTableItems);
 const tableHeaders = ref([
-    {
-        title: 'ID',
-        align: 'start',
-        key: 'id',
-    },
-    {
-        title: 'Status',
-        align: 'center',
-        key: 'status',
-    },
-    {
-        title: 'Decision',
-        align: 'center',
-        key: 'decision',
-    },
-    {
-        title: 'Radius',
-        align: 'center',
-        key: 'radius',
-    },
+    { title: 'ID', align: 'start', key: 'id', },
+    { title: 'Status', align: 'center', key: 'status', },
+    { title: 'Decision', align: 'center', key: 'decision', },
+    { title: 'Radius', align: 'center', key: 'radius', },
     { title: 'Texture', align: 'center', key: 'texture' },
     { title: 'Perimeter', align: 'center', key: 'perimeter' },
     { title: 'Area', align: 'center', key: 'area' },
@@ -74,10 +58,8 @@ function getRowChipColor(row) {
 function updateRow(row, itemID) {
     let updateData = {
         id: itemID,
-        row: row,
-        // row: { status: "updated", ...row }
+        row: { status: "updated", ...row }
     }
-    updateData.row.status = "updated"
     store.updateRow(updateData)
 }
 </script>
