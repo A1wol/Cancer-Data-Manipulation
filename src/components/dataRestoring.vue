@@ -7,10 +7,10 @@
 </template>
 <script setup>
 import { ref, defineEmits, defineProps, watch } from "vue"
-import { useStore } from 'vuex';
 import { DataRow } from "@/classes/dataRestore.js"
+import { useDataStore } from "@/store/index"
 
-const store = useStore();
+const store = useDataStore()
 defineEmits(['openModal']);
 const props = defineProps(['restoreAccepted']);
 const restoredRows = ref([])
@@ -68,8 +68,8 @@ function restoreData() {
     resetAverages()
     sumRowAttributeValues()
     getDataRowValues()
-    store.commit('clearDeletedRows')
-    store.commit('setRestoredRows', restoredRows.value)
+    // store.commit('clearDeletedRows')
+    // store.commit('setRestoredRows', restoredRows.value)
 }
 watch(props, () => {
     if (props.restoreAccepted) {

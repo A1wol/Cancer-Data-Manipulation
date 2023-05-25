@@ -1,10 +1,12 @@
-import { createStore } from 'vuex'
+import { defineStore } from 'pinia'
 
-export default createStore({
-  state: {
-    tableItems: [],
-    deletedRows: [],
-    restoredRows: []
+export const useDataStore = defineStore('dataStore', {
+  state: () => {
+    return {
+      tableItems: [],
+      deletedRows: [],
+      restoredRows: []
+    }
   },
   getters: {
     getTableItems(state) {
@@ -17,7 +19,7 @@ export default createStore({
       return state.restoredRows;
     }
   },
-  mutations: {
+  actions: {
     addTableItems(state, items) {
       state.tableItems = items;
     },
@@ -66,8 +68,4 @@ export default createStore({
       }
     }
   },
-  actions: {
-  },
-  modules: {
-  }
 })

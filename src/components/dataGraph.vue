@@ -29,14 +29,14 @@
 </template>
 <script setup>
 import { ref, onMounted, computed, watch } from "vue"
-import { useStore } from "vuex"
 import GraphHeader from "./graphHeader.vue";
+import { useDataStore } from "@/store/index"
 
+const store = useDataStore()
 const realTimeChart = ref()
-const store = useStore()
 const graphCategories = ref([])
 const selectedCategory = ref()
-const tableItems = ref(store.getters.getTableItems)
+// const tableItems = ref(store.getters.getTableItems)
 const categoryValues = computed(() => tableItems.value.map(el => el[selectedCategory.value]));
 const xAxisDuplicates = computed(() => [...new Set(categoryValues.value)].map(value => new Object({ "value": value, "duplicateCount": categoryValues.value.filter(str => str === value).length })));
 

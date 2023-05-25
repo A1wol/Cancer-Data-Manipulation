@@ -25,10 +25,11 @@
 </template>
 <script setup>
 import { ref, computed } from "vue"
-import { useStore } from "vuex"
 import TableRowUpdate from "./tableRowUpdate.vue";
+import { useDataStore } from "@/store/index"
+
+const store = useDataStore()
 const itemsPerPage = ref(10);
-const store = useStore()
 const tableItems = computed(() => store.getters.getTableItems);
 const tableHeaders = ref([
     {
@@ -74,7 +75,7 @@ function updateRow(row, itemID) {
         id: itemID,
         row: { status: "updated", ...row }
     }
-    store.commit('updateRow', updateData)
+    // store.commit('updateRow', updateData)
 }
 </script>
 <style scoped lang="scss">

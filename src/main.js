@@ -3,11 +3,11 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import router from './router'
-import store from './store';
 import VueApexCharts from "vue3-apexcharts";
+import { createPinia } from 'pinia'
 
 loadFonts()
 
-createApp(App).use(store).use(router)
+createApp(App).use(router).use(createPinia())
   .use(vuetify).use(VueApexCharts)
   .mount('#app')

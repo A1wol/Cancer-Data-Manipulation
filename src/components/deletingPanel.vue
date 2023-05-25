@@ -43,10 +43,10 @@
     </div>
 </template>
 <script setup>
-import { useStore } from 'vuex';
 import { ref, defineEmits, defineProps, watch } from "vue";
+import { useDataStore } from "@/store/index"
 
-const store = useStore();
+const store = useDataStore()
 const form = ref();
 const selectedRowsToDelete = ref();
 const randomRowsToDeleteQuantity = ref(50)
@@ -58,7 +58,7 @@ const props = defineProps(['restoreAccepted']);
 function deleteData() {
     form.value.validate();
     if ((isDeletingRandom.value && randomRowsToDeleteQuantity.value > 0) || (!isDeletingRandom.value && selectedRowsToDelete.value)) {
-        store.commit('deleteTableRows', { "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
+        // store.commit('deleteTableRows', { "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
         isInfoVisible.value = true;
         selectedRowsToDelete.value = undefined;
         setTimeout(() => {
