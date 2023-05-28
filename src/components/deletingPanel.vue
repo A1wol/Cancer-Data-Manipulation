@@ -13,7 +13,14 @@
                         <v-slider v-model="randomRowsToDeleteQuantity" :rules="[v => v > 0 || 'Must be greater than 0']"
                             :step="1" thumb-label color="orange" label="Amount of rows to delete">
                         </v-slider>
-                        <div>Selected amount: {{ randomRowsToDeleteQuantity }}</div>
+                        <v-slider v-model="randomAttributesToDeleteQuantity"
+                            :rules="[v => v > 0 || 'Must be greater than 0']" :step="1" thumb-label color="red" max="10"
+                            label="Amount of properties to delete">
+                        </v-slider>
+                        <div>Deleted properties quantity: {{ randomAttributesToDeleteQuantity }}</div>
+                        <div>Deleted rows quantity: {{ randomRowsToDeleteQuantity }}</div>
+                        <div>Sum of deleted records: {{ randomAttributesToDeleteQuantity * randomRowsToDeleteQuantity }}
+                        </div>
                     </div>
                 </div>
 
@@ -50,6 +57,7 @@ const store = useDataStore()
 const form = ref();
 const selectedRowsToDelete = ref();
 const randomRowsToDeleteQuantity = ref(50)
+const randomAttributesToDeleteQuantity = ref(1)
 const isDeletingRandom = ref(true);
 const isInfoVisible = ref(false);
 defineEmits(['openModal']);
@@ -58,7 +66,12 @@ const props = defineProps(['restoreAccepted']);
 function deleteData() {
     form.value.validate();
     if ((isDeletingRandom.value && randomRowsToDeleteQuantity.value > 0) || (!isDeletingRandom.value && selectedRowsToDelete.value)) {
-        store.deleteTableRows({ "rows": selectedRowsToDelete.value, "isRandom": isDeletingRandom.value, "rowQuantity": randomRowsToDeleteQuantity.value })
+        store.deleteTableRows({
+            "rows": selectedRowsToDelete.value,
+            "isRandom": isDeletingRandom.value,
+            "rowQuantity": randomRowsToDeleteQuantity.value,
+            "propertyQuantity": randomAttributesToDeleteQuantity.value
+        })
         isInfoVisible.value = true;
         selectedRowsToDelete.value = undefined;
         setTimeout(() => {

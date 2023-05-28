@@ -93,6 +93,7 @@ const series = ref([{
     data: []
 }])
 watch(selectedCategory, () => {
+    getSeriesData();
     realTimeChart.value.updateSeries(([{
         data: series.value[0].data
     }], false, true))
@@ -101,7 +102,6 @@ watch(selectedCategory, () => {
             categories: options.value.xaxis.categories
         }
     })
-    getSeriesData();
 })
 onMounted(() => {
     getGraphCategories();
