@@ -36,12 +36,14 @@
         </div>
     </Transition>
 </template>
+
 <script setup>
 import { ref, defineProps, defineEmits, onMounted } from "vue"
 
 const props = defineProps(['rowData']);
 const isUpdatePanelVisible = ref(false)
-defineEmits(['updateRow'])
+const emit = defineEmits(['updateRow'])
+
 const updatedRow = ref({
     radius: props.rowData.columns.radius,
     texture: props.rowData.columns.texture,
@@ -54,6 +56,7 @@ const updatedRow = ref({
     symmetry: props.rowData.columns.symmetry,
     fractalDimension: props.rowData.columns.fractalDimension
 });
+
 onMounted(() => {
     isUpdatePanelVisible.value = true
 })

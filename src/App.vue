@@ -8,7 +8,7 @@
           </v-list-item>
         </v-list>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-table" title="Data Table" @click="router.push('/')"></v-list-item>
@@ -26,11 +26,12 @@
     </v-layout>
   </v-app>
 </template>
+
 <script setup>
 import logoUR from "@/assets/logo-ur.jpg"
 import router from "./router";
 import { onMounted } from "vue"
-import breastCancerData from "@/dist/data/breast-cancer-wisconsin.data";
+import breastCancerData from "@/data/breast-cancer-wisconsin.data";
 import { ref } from "vue";
 import { useDataStore } from "@/store/index"
 
@@ -42,6 +43,7 @@ function getData() {
   tableItems.value = [];
   store.clearDeletedRows();
   store.clearRestoredRows();
+  
   breastCancerData.split("\n").forEach(element => {
     const elementValues = element.split(",")
     tableItems.value.push(
@@ -63,13 +65,16 @@ function getData() {
     )
     id++;
   });
+
   tableItems.value.pop();
   store.addTableItems(tableItems.value)
 }
+
 onMounted(() => {
   getData();
 })
 </script>
+
 <style scoped lang="scss">
 .main {
   display: flex;
