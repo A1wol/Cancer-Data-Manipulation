@@ -11,11 +11,7 @@
     <div class="data__table">
       <DataTable />
     </div>
-    <!-- <Transition>
-            <InterfaceModal v-if="isModalVisible" @close="isModalVisible = false" @accept="isRestoringAccepted = true">
-                Are you sure you want to restore data?
-            </InterfaceModal>
-        </Transition> -->
+    
     <Transition>
       <InterfaceModal
         v-if="modal.visibility"
@@ -24,14 +20,37 @@
         @close="modal.visibility = false"
         @accept="modal.restoringAccepted = true"
       >
-      <h5>Are you sure you want to restore data?</h5>
       <div class="data__select-list">
           <div class="data__select">
             <v-select
             v-model="selected.measureOfDistance"
-            :items="distanceMeasures"
+            :items="selectItems.distance"
             label="Distance measure"
-            name="label"
+          />
+          </div>
+
+          <div class="data__select">
+            <v-select
+            v-model="selected.normalForm"
+            :items="selectItems.normalization"
+            label="Normalization type"
+          />
+          </div>
+
+          <div class="data__select">
+            <v-select
+            v-model="selected.type"
+            :items="selectItems.type"
+            label="Restoring type"
+          />
+          </div>
+          
+          <div class="data__select">
+            <v-select
+            v-model="selected.amountOfNeighbours"
+            :items="selectItems.neighbours"
+            :disabled="selected.type !== 'K-Nearest Neighbors'"
+            label="Amount of neighbours"
           />
           </div>
         </div>
@@ -45,21 +64,28 @@ import DataHeader from "@/components/dataHeader.vue";
 import DataRestoring from "@/components/dataRestoring.vue";
 import DataTable from "@/components/dataTable.vue";
 import InterfaceModal from "@/components/ui/interfaceModal.vue";
-import { DistanceMeasure } from "@/enums";
-import { reactive, computed } from "vue";
+import { DistanceMeasure, NormalizationTypes, RestoringType } from "@/enums";
+import { reactive } from "vue";
 
 const modal = reactive({
   visibility: false,
   restoringAccepted: false,
 });
 
-const selected = reactive({
-  measureOfDistance: Object.keys(DistanceMeasure)[0],
+const selectItems = reactive({
+  distance: Object.values(DistanceMeasure),
+  normalization: Object.values(NormalizationTypes),
+  type: Object.values(RestoringType),
+  neighbours: Array.from({ length: 50 }, (_, i) => (i + 1) * 5)
 });
 
-const distanceMeasures = computed(() => {
-  return Object.keys(DistanceMeasure);
+const selected = reactive({
+  measureOfDistance: selectItems.distance[0],
+  normalForm: selectItems.normalization[0],
+  type: selectItems.type[0],
+  neighbours: 2
 });
+
 </script>
 
 <style scoped lang="scss">
